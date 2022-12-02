@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const requireAuth = async (req, res, next) => {
+const admin = async (req, res, next) => {
   // verify user is authenticated
   const { authorization } = req.headers;
 
@@ -12,7 +12,10 @@ const requireAuth = async (req, res, next) => {
 
   try {
     let jwtSecretKey = process.env.JWT_SECRET_KEY;
-    jwt.verify(token, jwtSecretKey);
+    const { userType } = jwt.verify(token, jwtSecretKey);
+    if (userType != "Admin") {
+      return res.status(403).json({ error: "Forbidden" });
+    }
     next();
   } catch (error) {
     console.log(error);
@@ -20,4 +23,4 @@ const requireAuth = async (req, res, next) => {
   }
 };
 
-module.exports = requireAuth;
+module.exports = admin;

@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/salmaoujanafront/backend/issues"
   },
-  "homepage": "https://github.com/salmaoujanafront/backend#readme"
+  "homepage": "https://github.com/salmaoujanafront/backend#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^6.7.5"
+  }
 }

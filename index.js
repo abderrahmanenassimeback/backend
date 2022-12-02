@@ -6,13 +6,22 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 // const { encrypt, decrypt } = require("./EncryptionHandler");
+const apiUrl="/api/v1";
 
 app.use(express.json());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const auth = require("./routes/authRoutes");
-app.use("/auth", auth);
+app.use(`${apiUrl}/auth`, auth);
+
+// manage price
+const price = require("./routes/priceRoutes");
+app.use(`${apiUrl}`,price);
+
+// manage contest
+const contest = require("./routes/contestRoute");
+app.use(`${apiUrl}`,contest);
 
 //configure mongoose
 mongoose.connect(

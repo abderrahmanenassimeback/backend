@@ -1,13 +1,34 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const app = express();
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+
+// const { encrypt, decrypt } = require("./EncryptionHandler");
 
 app.use(express.json());
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-mongoose.connect("mongodb://localhost:27017/CRUD", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const auth = require("./routes/authRoutes");
+app.use("/auth", auth);
+
+//configure mongoose
+mongoose.connect(
+  process.env.MONGODB_URI ||
+    "mongodb+srv://tiptop:tiptop@cluster0.f8idmlg.mongodb.net/tiptop",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  },
+  (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Connected to MongoDB");
+    }
+  }
+);
 
 app.listen(3001, () => {
   console.log("Sever start on port 3001");

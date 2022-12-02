@@ -2,24 +2,38 @@ const User = require("../models/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+var validator = require("email-validator");
 
 exports.createUser = async (req, res) => {
-  console.log(req.body);
-
   // console.Console(user);
   try {
     const { name, email, passportNumber, password, userType } = req.body;
-    const hashed = bcrypt.hashSync(password, 8);
-    const userModel = new User({
-      name: name,
-      email: email,
-      password: hashed,
-      passportNumber: passportNumber,
-      userType: userType,
-    });
-    const createdUser = await userModel.save();
+    if (!(email && password && userType)) {
+      res.status(400).send("All input is required");
+    } else {
+      if (!validator.validate(email)) {
+        res.status(400).send("Invalid email");
+      } else {
+        //validate user
+        const user = await User.findOne({ email });
 
-    res.json({ data: createdUser, status: "success" });
+        if (user != null) {
+          res.status(400).send("Email already used");
+        } else {
+          const hashed = bcrypt.hashSync(password, 8);
+          const userModel = new User({
+            name: name,
+            email: email,
+            password: hashed,
+            passportNumber: passportNumber,
+            userType: userType,
+          });
+          const createdUser = await userModel.save();
+
+          res.json({ data: createdUser, status: "success" });
+        }
+      }
+    }
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

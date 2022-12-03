@@ -47,6 +47,10 @@ app.use(`${apiUrl}`, contest);
 const contestParticipent = require("./routes/contestParticipentRoute");
 app.use(`${apiUrl}`,contestParticipent);
 
+//manage user
+const userRoutes = require("./routes/userRoutes");
+app.use(`${apiUrl}`,userRoutes);
+
 //configure mongoose
 mongoose.connect(
   process.env.MONGODB_URI ||

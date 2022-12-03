@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const status=require("../enum/Status");
 
 const ContestSchema = mongoose.Schema({
   name: {
@@ -18,7 +19,7 @@ const ContestSchema = mongoose.Schema({
     required: true,
   },
   chooseprices: {
-    type: Object,
+    type: Array,
     required: true,
   },
   mainPrice: {

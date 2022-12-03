@@ -9,17 +9,17 @@ exports.addPrice = async (req, res) => {
     });
     const addPrice = await priceModel.save();
 
-    res.json({ data: addPrice, status: "success" });
+    res.status(201).json({ data: addPrice});
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(422).json({ error: err.message });
   }
 };
 
 exports.getPriceList = async (req, res) => {
     try {
         const priceList = await Price.find();
-        res.json({data: priceList});
+        res.status(200).json(priceList);
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        res.status(422).json({ error: err.message });
     }
 };

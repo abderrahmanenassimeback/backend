@@ -4,7 +4,7 @@ const status=require("../enum/Status");
 const ContestSchema = mongoose.Schema({
   name: {
     type: String,
-    required: true,
+    required: true
   },
   startDate: {
     type:String,
@@ -31,6 +31,6 @@ const ContestSchema = mongoose.Schema({
     required: true,
   },
    
-});
+},{ timestamps: true });
 
 module.exports = mongoose.model("contests", ContestSchema);

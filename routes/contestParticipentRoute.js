@@ -4,7 +4,7 @@ const contestParticipentController = require("../controllers/contestParticipentC
 const router = express.Router();
 
 router.post("/contest-participents/ticket-validatation-requests", contestParticipentController.ticketValidationAndSave);
-// router.get("/contests", contestController.getContestList);
+router.get("/contest-participents", contestParticipentController.getContestParticipentsList);
 // router.get("/contests/:id", contestController.getContestById);
 
 module.exports = router;

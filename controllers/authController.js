@@ -5,6 +5,7 @@ require("dotenv").config();
 var validator = require("email-validator");
 
 exports.createUser = async (req, res) => {
+  let jwtSecretKey = process.env.JWT_SECRET_KEY;
   // console.Console(user);
   try {
     const { name, email, passportNumber, password } = req.body;
@@ -30,7 +31,21 @@ exports.createUser = async (req, res) => {
           });
           const createdUser = await userModel.save();
 
-          res.json({ data: createdUser, status: "success" });
+          const token = jwt.sign(
+            {
+              userId: createdUser._id,
+              userType: createdUser.userType,
+              email,
+              name,
+            },
+            jwtSecretKey,
+            {
+              expiresIn: "2h",
+            }
+          );
+
+          // user
+          res.status(200).json({ accessToken: token });
         }
       }
     }
@@ -54,7 +69,7 @@ exports.signIn = async (req, res) => {
     if (user && (await bcrypt.compare(password, user.password))) {
       // Create token
       const token = jwt.sign(
-        { userId: user._id, userType: user.userType, email },
+        { userId: user._id, userType: user.userType, email, name: user.name },
         jwtSecretKey,
         {
           expiresIn: "2h",
@@ -130,4 +145,28 @@ exports.failGoogleLogin = async (req, res) => {
 exports.logout = async (req, res) => {
   req.logout();
   res.redirect(process.env.CLIENT_URL);
+};
+
+exports.checkUserExist = async (req, res) => {
+  // console.Console(user);
+  try {
+    const { email } = req.body;
+    if (!email) {
+      res.status(422).send("All input is required");
+    } else {
+      if (!validator.validate(email)) {
+        res.status(422).send("Invalid email");
+      } else {
+        const user = await User.findOne({ email });
+        if (user == null) {
+          res.status(404).send("Not Found");
+        } else {
+          user.password = null;
+          res.status(200).json(user);
+        }
+      }
+    }
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 };

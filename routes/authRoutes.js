@@ -32,4 +32,6 @@ router.get(
 
 router.get("/logout", authController.logout);
 
+router.post("/checkUserExist", authController.checkUserExist);
+
 module.exports = router;

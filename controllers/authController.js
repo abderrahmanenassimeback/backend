@@ -124,11 +124,33 @@ exports.addEmplyoee = async (req, res) => {
 };
 
 exports.sucessGoogleLogin = async (req, res) => {
+  let jwtSecretKey = process.env.JWT_SECRET_KEY;
+  let isAlreadySignUp = false;
+  let token;
   if (req.user) {
+    const user = await User.findOne({ email: req.user._json.email });
+    if (user != null) {
+      token = jwt.sign(
+        {
+          userId: user._id,
+          userType: user.userType,
+          email: user.email,
+          name: user.name,
+        },
+        jwtSecretKey,
+        {
+          expiresIn: "2h",
+        }
+      );
+      isAlreadySignUp = true;
+    }
+
     res.status(200).json({
       error: false,
       message: "Successfully Loged In",
       user: req.user,
+      isAlreadySignUp: isAlreadySignUp,
+      accessToken: token,
     });
   } else {
     res.status(403).json({ error: true, message: "Not Authorized" });

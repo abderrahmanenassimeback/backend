@@ -104,11 +104,19 @@ exports.updateTicketPrice = async (req, res) => {
     } = req.body;
 
 
-    //change isValid=false in ticket
-    const ticket = await Ticket.findOne({ticketId:ticketId});
-    if (!ticket) {
-      res.status(404).json({ error: "No such Ticket" });
-    }
+    // //change isValid=false in ticket
+    // const ticket = await Ticket.findOne({ticketId:ticketId});
+    // if (!ticket) {
+    //   res.status(404).json({ error: "No such Ticket" });
+    // }
+
+    // let doc = await Ticket.findOneAndUpdate(filter, update, {
+    //   new: true
+    // });
+
+
+
+
 
 
 

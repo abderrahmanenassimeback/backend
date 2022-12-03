@@ -16,7 +16,15 @@ const ContestParticipentSchema = mongoose.Schema({
   prize: {
     type: String,
     default:""
-  },   
+  },
+  prizeStatus: {
+    type: String,
+    default:""
+  },
+  mainPrizeResult: {
+    type: String,
+    default:"Loose"
+  },      
 },{ timestamps: true });
 
 module.exports = mongoose.model("contestParticipents", ContestParticipentSchema);

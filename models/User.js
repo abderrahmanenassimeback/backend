@@ -10,7 +10,7 @@ const UserSchema = mongoose.Schema({
     required: true,
   },
   passportNumber: {
-    type: Number,
+    type: String,
     required: true,
   },
   password: {
@@ -21,6 +21,6 @@ const UserSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-});
+},{ timestamps: true });
 
 module.exports = mongoose.model("users", UserSchema);

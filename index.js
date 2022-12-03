@@ -43,6 +43,10 @@ app.use(`${apiUrl}`, price);
 const contest = require("./routes/contestRoute");
 app.use(`${apiUrl}`, contest);
 
+// manage contest
+const contestParticipent = require("./routes/contestParticipentRoute");
+app.use(`${apiUrl}`,contestParticipent);
+
 //configure mongoose
 mongoose.connect(
   process.env.MONGODB_URI ||

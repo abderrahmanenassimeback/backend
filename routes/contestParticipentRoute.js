@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.post("/contest-participents/ticket-validatation-requests", contestParticipentController.ticketValidationAndSave);
 router.get("/contest-participents", contestParticipentController.getContestParticipentsList);
-// router.post("/contest-participents", contestParticipentController.updateTicketPrice);
+router.post("/contest-participents", contestParticipentController.updateTicketPrice);
 
 module.exports = router;

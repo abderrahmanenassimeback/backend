@@ -2,7 +2,6 @@ const Contest = require("../models/Contest");
 const Ticket = require("../models/Ticket");
 const User = require("../models/User");
 const ContestParticipent = require("../models/contestParticipent");
-// const User = require("../models/User");
 
 exports.ticketValidationAndSave = async (req, res) => {
   try {
@@ -40,9 +39,9 @@ exports.ticketValidationAndSave = async (req, res) => {
             contestId: contestId,
           });
           await contestParticipentModel.save();
-          res.status(201).json({contestId:contestId,ticketId:ticketId});
+          res.status(201).json({ contestId: contestId, ticketId: ticketId });
         } else if (lenContestPRecord === 1) {
-          res.status(201).json({contestId:contestId,ticketId:ticketId});
+          res.status(201).json({ contestId: contestId, ticketId: ticketId });
         } else {
           res.status(422).json({ error: "Entered ticket id is invalid" });
         }
@@ -96,16 +95,10 @@ exports.getContestParticipentsList = async (req, res) => {
 
 exports.updateTicketPrice = async (req, res) => {
   try {
-    const {
-      userId,
-      ticketId,
-      contestId,
-      price
-    } = req.body;
-
+    const { userId, ticketId, contestId, price } = req.body;
 
     //change isValid=false in ticket
-    const ticket = await Ticket.findOne({ticketId:ticketId});
+    const ticket = await Ticket.findOne({ ticketId: ticketId });
     if (!ticket) {
       res.status(404).json({ error: "No such Ticket" });
     }
@@ -114,20 +107,22 @@ exports.updateTicketPrice = async (req, res) => {
     const update = { isValid: false };
 
     let updateTicket = await Ticket.findOneAndUpdate(filter, update, {
-      new: true
+      new: true,
     });
 
-    const filterContest = { ticketId: ticketId ,contestId:contestId};
-    const updateContest = { prize: price,prizeStatus:"Pending" };
+    const filterContest = { ticketId: ticketId, contestId: contestId };
+    const updateContest = { prize: price, prizeStatus: "Pending" };
 
-    let updateContestParticipent = await ContestParticipent.findOneAndUpdate(filterContest, updateContest, {
-      new: true
-    });
+    let updateContestParticipent = await ContestParticipent.findOneAndUpdate(
+      filterContest,
+      updateContest,
+      {
+        new: true,
+      }
+    );
 
     res.status(204).send("success");
   } catch (err) {
     res.status(422).json({ error: err.message });
   }
 };
-
-

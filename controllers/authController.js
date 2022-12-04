@@ -9,7 +9,7 @@ exports.createUser = async (req, res) => {
   // console.Console(user);
   try {
     const { name, email, passportNumber, password } = req.body;
-    if (!(email && password && passportNumber && name)) {
+    if (!(email && passportNumber && name)) {
       res.status(422).send("All input is required");
     } else {
       if (!validator.validate(email)) {

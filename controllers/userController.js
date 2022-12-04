@@ -54,3 +54,12 @@ exports.getUserHisteryContest = async (req, res) => {
     }
   };
   
+  exports.getUsersList = async (req, res) => {
+    try {
+        const usereList = await User.find();
+        res.status(200).json(usereList);
+    } catch (err) {
+        res.status(422).json({ error: err.message });
+    }
+};
+  

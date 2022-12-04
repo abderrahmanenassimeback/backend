@@ -11,5 +11,21 @@ exports.addPrice = async (name, winningChance) => {
 
 exports.getPriceList = async () => {
   const priceList = await Price.find();
-  return priceList;
+  let priceArray = [];
+
+  for (const element of priceList) {
+    let prices = {
+      id: "",
+      name: "",
+      winningChance: "",
+      checked: "",
+    };
+
+    prices.id = element._id.toString();
+    prices.name = element.name;
+    prices.winningChance = element.winningChance;
+    prices.checked = 0;
+    priceArray.push(prices);
+  }
+  return priceArray;
 };

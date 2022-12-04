@@ -12,7 +12,7 @@ exports.addPrice = async (req, res) => {
 
 exports.getPriceList = async (req, res) => {
   try {
-     const priceList = await priceService.getPriceList();
+    const priceList = await priceService.getPriceList();
     res.status(200).json(priceList);
   } catch (err) {
     res.status(422).json({ error: err.message });

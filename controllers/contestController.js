@@ -72,7 +72,7 @@ function makeid(length) {
 exports.getContestList = async (req, res) => {
   try {
     const contestList = await Contest.find();
-    res.status(200).json({ contestList });
+    res.status(200).json( contestList);
   } catch (err) {
     res.status(422).json({ error: err.message });
   }

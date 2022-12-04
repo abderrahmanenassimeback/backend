@@ -18,3 +18,21 @@ exports.getUsersList = async (req, res) => {
     res.status(422).json({ error: err.message });
   }
 };
+
+exports.updateUserProfile = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { name } = req.body;
+
+    const filter = { _id: id };
+    const update = { name: name };
+
+    let updateUser = await User.findOneAndUpdate(filter, update, {
+      new: true,
+    });
+
+    res.status(204).send("success");
+  } catch (err) {
+    res.status(422).json({ error: err.message });
+  }
+};

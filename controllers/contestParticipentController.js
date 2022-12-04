@@ -40,9 +40,9 @@ exports.ticketValidationAndSave = async (req, res) => {
             contestId: contestId,
           });
           await contestParticipentModel.save();
-          res.status(204).send("success");
+          res.status(201).json({contestId:contestId,ticketId:ticketId});
         } else if (lenContestPRecord === 1) {
-          res.status(204).send("success");
+          res.status(201).json({contestId:contestId,ticketId:ticketId});
         } else {
           res.status(422).json({ error: "Enter ticket id is invalid" });
         }

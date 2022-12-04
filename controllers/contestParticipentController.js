@@ -13,7 +13,7 @@ exports.ticketValidationAndSave = async (req, res) => {
     const len = activeContest.length;
 
     if (len === 0) {
-      res.status(422).json({ error: "Ticket id is invalid" });
+      res.status(422).json({ error: "Entered Ticket id is invalid" });
     } else if (len === 1) {
       const contestId = activeContest.at(0)._id.toString();
 
@@ -44,10 +44,10 @@ exports.ticketValidationAndSave = async (req, res) => {
         } else if (lenContestPRecord === 1) {
           res.status(201).json({contestId:contestId,ticketId:ticketId});
         } else {
-          res.status(422).json({ error: "Enter ticket id is invalid" });
+          res.status(422).json({ error: "Entered ticket id is invalid" });
         }
       } else {
-        res.status(422).json({ error: "Enter ticket id is invalid" });
+        res.status(422).json({ error: "Entered ticket id is invalid" });
       }
     } else {
       res.status(422).json({ error: "There is some problem with contest" });

@@ -21,7 +21,11 @@ exports.createUser = async (req, res) => {
         if (user != null) {
           res.status(422).send("Email already used");
         } else {
-          const hashed = bcrypt.hashSync(password, 8);
+          let hashed = "";
+          if (password != undefined) {
+            hashed = bcrypt.hashSync(password, 8);
+          }
+
           const userModel = new User({
             name: name,
             email: email,

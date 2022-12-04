@@ -58,3 +58,17 @@ exports.getUserHisteryContest = async (id) => {
     throw err;
   }
 };
+
+exports.updateUserProfile = async (id, name) => {
+  try {
+    const filter = { _id: id };
+    const update = { name: name };
+
+    let updateUser = await User.findOneAndUpdate(filter, update, {
+      new: true,
+    });
+    return updateUser;
+  } catch (err) {
+    throw err;
+  }
+};

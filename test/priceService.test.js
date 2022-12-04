@@ -2,7 +2,7 @@ const priceService = require("../services/priceService");
 const Price = require("../models/Price");
 const mockingoose = require("mockingoose");
 
-describe("Prize controller", () => {
+describe("Prize service tests", () => {
   test("Add new prize success", async () => {
     mockingoose(Price).toReturn(
       {

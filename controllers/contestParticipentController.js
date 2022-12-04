@@ -58,20 +58,20 @@ exports.ticketValidationAndSave = async (req, res) => {
 
 exports.getContestParticipentsList = async (req, res) => {
   try {
-    const contestUser = {
-      name: "",
-      email: "",
-      userId: "",
-      ticketId: "",
-      contestId: "",
-      prize: "",
-    };
-
+   
     const data = await ContestParticipent.find();
     let userId = "";
     let userArray = [];
 
     for (const element of data) {
+      const contestUser = {
+        name: "",
+        email: "",
+        userId: "",
+        ticketId: "",
+        contestId: "",
+        prize: "",
+      };
       userId = element.userId;
       const user = await User.find({ _id: userId });
 
@@ -97,11 +97,12 @@ exports.updateTicketPrice = async (req, res) => {
   try {
     const { userId, ticketId, contestId, price } = req.body;
 
-    //change isValid=false in ticket
+    const data = await ContestParticipent.findOne({ ticketId: ticketId,contestId:contestId });
+   
     const ticket = await Ticket.findOne({ ticketId: ticketId });
-    if (!ticket) {
+    if (!ticket || data.prize.length > 0) {
       res.status(404).json({ error: "No such Ticket" });
-    }
+    }else{
 
     const filter = { ticketId: ticketId };
     const update = { isValid: false };
@@ -122,6 +123,7 @@ exports.updateTicketPrice = async (req, res) => {
     );
 
     res.status(204).send("success");
+    }
   } catch (err) {
     res.status(422).json({ error: err.message });
   }

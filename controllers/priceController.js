@@ -18,29 +18,31 @@ exports.addPrice = async (req, res) => {
 exports.getPriceList = async (req, res) => {
     try {
 
-      const prices = {
-        id: "",
-        name: "",
-        winningChance: "",
-        checked:0
-      };
-        const priceList = await Price.find();
+     
+    
 
-        let userArray = [];
+        const priceList = await Price.find();
+        let priceArray = [];
 
         for (const element of priceList) {
-          
-          if (priceList.length > 0) {
+
+          let prices = {
+            id: "",
+            name: "",
+            winningChance:"" ,
+            checked:""
+          };
+
             prices.id = element._id.toString();
             prices.name = element.name;
             prices.winningChance = element.winningChance;
-            prices.checked = 0;
-        
-            userArray.push(prices);
-          }
+            prices.checked = 0
+            priceArray.push(prices);
+      
         }
     
-        res.status(200).json(userArray);
+        res.status(200).json(priceArray);
+
     } catch (err) {
         res.status(422).json({ error: err.message });
     }

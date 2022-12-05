@@ -11,7 +11,7 @@ router.post("/sign-up", authController.createUser);
 
 router.post("/sign-in", authController.signIn);
 
-router.post("/add-employee", admin, authController.addEmplyoee);
+router.post("/add-employee",admin, authController.addEmplyoee);
 
 router.get("/google/login/success", authController.sucessGoogleLogin);
 

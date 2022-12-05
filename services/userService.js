@@ -18,23 +18,23 @@ exports.getUserHisteryContest = async (id) => {
       res.status(404).json({ error: "No such User" });
     }
 
-    const contestUserHistery = {
-      userId: "",
-      ticketId: "",
-      contestId: "",
-      contestName: "",
-      contestStartDate: "",
-      contestEndDate: "",
-      contestStatus: "",
-      prize: "",
-      prizeStatus: "",
-      mainPrizeResult: "",
-    };
-
     const contestParticipent = await ContestParticipent.find({ userId: id });
     let userHisteryArray = [];
 
     for (const element of contestParticipent) {
+      const contestUserHistery = {
+        userId: "",
+        ticketId: "",
+        contestId: "",
+        contestName: "",
+        contestStartDate: "",
+        contestEndDate: "",
+        contestStatus: "",
+        prize: "",
+        prizeStatus: "",
+        mainPrizeResult: "",
+      };
+
       let userId = element.userId;
       const contest = await Contest.find({ _id: element.contestId });
 
@@ -53,7 +53,8 @@ exports.getUserHisteryContest = async (id) => {
         userHisteryArray.push(contestUserHistery);
       }
     }
-    return contestUserHistery;
+  
+    return userHisteryArray;
   } catch (err) {
     throw err;
   }

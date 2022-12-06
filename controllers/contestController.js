@@ -45,3 +45,27 @@ exports.getContestById = async (req, res) => {
     res.status(404).json({ error: err.message });
   }
 };
+
+//retrieve a specific active contest 
+exports.getActiveContest = async (req, res) => {
+  try {
+    const contest = await constestService.getActiveContest();
+    res.status(200).json(contest);
+  } catch (err) {
+    res.status(404).json({ error: err.message });
+  }
+};
+
+exports.chooseMainPrize = async (req, res) => {
+  try {
+    const contestId = req.params.id;
+    const winner = await constestService.chooseMainPrize(
+      contestId
+    );
+    res.status(201).send(winner);
+  } catch (err) {
+    res.status(422).json({ error: err.message });
+  }
+};
+
+

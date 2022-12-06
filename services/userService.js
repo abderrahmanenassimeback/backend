@@ -105,18 +105,34 @@ exports.updateUserProfile = async (id, name, email) => {
 exports.deleteUserProfile = async (id) => {
   try {
     const user = await User.findOneAndDelete({ _id: id });
-  //   console.log(user);
-  //   if (!user) {
-  //     console.log("HIiii")
-  //    // throw new Error("No such User");
-  //   } else {
-  //     const contestsP = await ContestParticipent.find({ _id: id });
-  //     for (const element of contestsP) {
-  //       let userId = element.userId;
-  //       await contestParticipent.deleteOne({ userId: userId });
-  //     }
-  //  }
-   return user;
+    console.log(user);
+    if (!user) {
+     throw new Error("No such User");
+    } else {
+      const contestsP = await ContestParticipent.find({ _id: id });
+      for (const element of contestsP) {
+        let userId = element.userId;
+        await contestParticipent.deleteOne({ userId: userId });
+      }
+      return user;
+   }
+  
+  } catch (err) {
+    throw err;
+  }
+};
+
+exports.updateUserPrizeStatus = async (userId, ticketId,contestId,prize) => {
+  try {
+    const filter = { userId: userId,ticketId:ticketId, contestId:contestId, prizeStatus:"Pending"};
+    const update = { prizeStatus:"Delivered" };
+
+    let updatecontestParticipent = await contestParticipent.findOneAndUpdate(filter, update, {
+      new: true,
+    });
+
+    console.log(updatecontestParticipent);
+    return updatecontestParticipent;
   } catch (err) {
     throw err;
   }

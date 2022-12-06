@@ -3,6 +3,9 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 var validator = require("email-validator");
+const Contest = require("../models/Contest");
+
+let activeContest = {};
 
 exports.createUser = async (req, res) => {
   let jwtSecretKey = process.env.JWT_SECRET_KEY;
@@ -79,6 +82,8 @@ exports.signIn = async (req, res) => {
           expiresIn: "2h",
         }
       );
+      activeContest = await Contest.find({ status: "Active" });
+      dateChecker(activeContest);
 
       // user
       res.status(200).json({ accessToken: token });
@@ -194,5 +199,38 @@ exports.checkUserExist = async (req, res) => {
     }
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+};
+
+const dateChecker = async (contest) => {
+  let date = new Date();
+
+  let year = date.getFullYear();
+
+  let month = date.getMonth();
+
+  let day = date.getDate();
+
+  let hours = date.getHours();
+
+  let minutes = date.getMinutes();
+
+  let endDate = contest[0].endDate;
+
+  let currentDate = new Date(year, month, day, hours, minutes);
+ 
+  let diff = Date.parse(currentDate) - Date.parse(endDate);
+  
+
+  if (diff >= 0) {
+    await Contest.findOneAndUpdate(
+      { status: "Active" },
+      { status: "InActive" },
+      {
+        new: true,
+      }
+    );
+  } else {
+    console.log("Not yet");
   }
 };

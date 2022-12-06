@@ -1,4 +1,5 @@
 const userService = require("../services/userService");
+const mongoose = require("mongoose");
 
 exports.getUserHisteryContest = async (req, res) => {
   try {
@@ -19,12 +20,32 @@ exports.getUsersList = async (req, res) => {
   }
 };
 
+exports.getUserById = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const userHisteryArray = await userService.getUserById(id);
+    res.status(200).json(userHisteryArray);
+  } catch (err) {
+    res.status(404).json({ error: err.message });
+  }
+};
+
 exports.updateUserProfile = async (req, res) => {
   try {
     const id = req.params.id;
-    const { name } = req.body;
-    userService.updateUserProfile(id, name);
+    const { name,email } = req.body;
+    userService.updateUserProfile(id, name,email);
 
+    res.status(204).send("success");
+  } catch (err) {
+    res.status(422).json({ error: err.message });
+  }
+};
+
+exports.deleteUserProfile = async (req, res) => {
+  try {
+    const id = req.params.id;
+    userService.deleteUserProfile(id);
     res.status(204).send("success");
   } catch (err) {
     res.status(422).json({ error: err.message });

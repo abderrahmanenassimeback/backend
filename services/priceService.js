@@ -29,3 +29,13 @@ exports.getPriceList = async () => {
   }
   return priceArray;
 };
+
+exports.priceDeleteByAdmin = async (id) => {
+  try {
+    const price = await Price.findOneAndDelete({ _id: id });
+   return price;
+  } catch (err) {
+    throw err;
+  }
+};
+

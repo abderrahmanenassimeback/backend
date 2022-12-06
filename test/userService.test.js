@@ -56,8 +56,8 @@ describe("User service tests", () => {
     );
 
     // arrange and act
-    var result = await userService.updateUserProfile(1, "name");
+    var result = await userService.updateUserProfile(1, "name","name@gmail.com");
     // assert
-    expect(result.name).toBe("name");
+    expect(result.name).toBe("name","name@gmail.com");
   });
 });

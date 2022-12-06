@@ -1,3 +1,4 @@
+const jwt = require("jsonwebtoken");
 const userService = require("../services/userService");
 const mongoose = require("mongoose");
 
@@ -23,8 +24,9 @@ exports.getUsersList = async (req, res) => {
 exports.getUserById = async (req, res) => {
   try {
     const id = req.params.id;
-    const userHisteryArray = await userService.getUserById(id);
-    res.status(200).json(userHisteryArray);
+    console.log(id);
+    const user = await userService.getUserById(id);
+    res.status(200).json(user);
   } catch (err) {
     res.status(404).json({ error: err.message });
   }
@@ -34,9 +36,9 @@ exports.updateUserProfile = async (req, res) => {
   try {
     const id = req.params.id;
     const { name,email } = req.body;
-    userService.updateUserProfile(id, name,email);
+    let token = await userService.updateUserProfile(id, name,email);
 
-    res.status(204).send("success");
+    res.status(200).json({ accessToken: token });
   } catch (err) {
     res.status(422).json({ error: err.message });
   }

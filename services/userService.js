@@ -1,3 +1,4 @@
+const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const ContestParticipent = require("../models/contestParticipent");
 const mongoose = require("mongoose");
@@ -62,14 +63,19 @@ exports.getUserHisteryContest = async (id) => {
 };
 
 exports.getUserById = async (id) => {
+
   try {
-    return await User.findOne({ userId: id });
+    console.log('serviceid :',id)
+    const user = await User.findOne({ _id: id });
+    console.log('database: ',user)
+    return user;
   } catch (err) {
     throw err;
   }
 };
 
 exports.updateUserProfile = async (id, name, email) => {
+  let jwtSecretKey = process.env.JWT_SECRET_KEY;
   try {
     const filter = { _id: id };
     const update = { name: name, email: email };
@@ -77,7 +83,20 @@ exports.updateUserProfile = async (id, name, email) => {
     let updateUser = await User.findOneAndUpdate(filter, update, {
       new: true,
     });
-    return updateUser;
+      const token = jwt.sign(
+      {
+        userId: updateUser._id,
+        userType: updateUser.userType,
+        email: updateUser.email,
+        name: updateUser.name,
+      },
+      jwtSecretKey,
+      {
+        expiresIn: "2h",
+      }
+    );
+    console.log(token)
+    return token;
   } catch (err) {
     throw err;
   }

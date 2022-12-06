@@ -22,7 +22,7 @@ exports.getPriceList = async (req, res) => {
 exports.priceDeleteByAdmin = async (req, res) => {
   try {
     const id = req.params.id;
-    userService.priceDeleteByAdmin(id);
+    priceService.priceDeleteByAdmin(id);
     res.status(204).send("success");
   } catch (err) {
     res.status(422).json({ error: err.message });

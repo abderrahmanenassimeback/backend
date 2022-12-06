@@ -71,6 +71,8 @@ exports.getContestParticipentsList = async (req, res) => {
         ticketId: "",
         contestId: "",
         prize: "",
+        prizeStatus:"",
+        mainPrizeResult:""
       };
       userId = element.userId;
       const user = await User.find({ _id: userId });
@@ -82,6 +84,8 @@ exports.getContestParticipentsList = async (req, res) => {
         contestUser.ticketId = element.ticketId;
         contestUser.contestId = element.contestId;
         contestUser.prize = element.prize;
+        contestUser.prizeStatus = element.prizeStatus;
+        contestUser.mainPrizeResult = element.mainPrizeResult;
 
         userArray.push(contestUser);
       }

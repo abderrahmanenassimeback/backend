@@ -3,6 +3,8 @@ const Contest = require("../models/Contest");
 const Ticket = require("../models/Ticket");
 const randomBytes = require("randombytes");
 const mongoose = require("mongoose");
+const contestParticipent = require("../models/contestParticipent");
+const User = require("../models/User");
 
 exports.createContest = async (
   name,
@@ -96,3 +98,59 @@ exports.getContestById = async (contestId) => {
     throw err;
   }
 };
+
+exports.getActiveContest = async () => {
+  try {
+    const contest = await Contest.findOne({ status: "Active" });
+    if (!contest) {
+      throw new Error("No such Contest");
+    }else{
+      return contest;
+    }
+  } catch (err) {
+    throw err;
+  }
+};
+
+exports.chooseMainPrize = async (id) => {
+  try {
+
+    let participents=await contestParticipent.find({contestId:id});
+    let validParticipents=participents.filter((item)=>item.prize != "");
+    var winner = validParticipents[Math.floor(Math.random()*validParticipents.length)];
+
+
+
+    const filter = { _id : winner._id  };
+    const update = { mainPrizeResult: "won"};
+
+    let updatecontestParticipent = await contestParticipent.findOneAndUpdate(filter, update, {
+      new: true,
+    });
+
+    const filter1 = { _id : winner.contestId  };
+    const update1 = { status: "Ended"};
+
+    let updateContest = await Contest.findOneAndUpdate(filter1, update1, {
+      new: true,
+    });
+
+    console.log("vwinner.userI",winner.userId)
+
+    let user=await User.findOne({_id: winner.userId});
+
+    console.log(user)
+    const data={
+      contestName: updateContest.name,
+      mainPrice : updateContest.mainPrice,
+      userId: winner.userId,
+      userName: user.name,
+      contestId: winner.contestId
+    }
+   console.log(data);
+   return data;
+  } catch (err) {
+    throw err;
+  }
+};
+

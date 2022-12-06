@@ -2,6 +2,7 @@ const User = require("../models/User");
 const ContestParticipent = require("../models/contestParticipent");
 const mongoose = require("mongoose");
 const Contest = require("../models/Contest");
+const contestParticipent = require("../models/contestParticipent");
 
 exports.getUsersList = async () => {
   try {
@@ -15,7 +16,7 @@ exports.getUsersList = async () => {
 exports.getUserHisteryContest = async (id) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      res.status(404).json({ error: "No such User" });
+      throw new Error("No such User");
     }
 
     const contestParticipent = await ContestParticipent.find({ userId: id });
@@ -53,22 +54,50 @@ exports.getUserHisteryContest = async (id) => {
         userHisteryArray.push(contestUserHistery);
       }
     }
-  
+
     return userHisteryArray;
   } catch (err) {
     throw err;
   }
 };
 
-exports.updateUserProfile = async (id, name) => {
+exports.getUserById = async (id) => {
+  try {
+    return await User.findOne({ userId: id });
+  } catch (err) {
+    throw err;
+  }
+};
+
+exports.updateUserProfile = async (id, name, email) => {
   try {
     const filter = { _id: id };
-    const update = { name: name };
+    const update = { name: name, email: email };
 
     let updateUser = await User.findOneAndUpdate(filter, update, {
       new: true,
     });
     return updateUser;
+  } catch (err) {
+    throw err;
+  }
+};
+
+exports.deleteUserProfile = async (id) => {
+  try {
+    const user = await User.findOneAndDelete({ _id: id });
+  //   console.log(user);
+  //   if (!user) {
+  //     console.log("HIiii")
+  //    // throw new Error("No such User");
+  //   } else {
+  //     const contestsP = await ContestParticipent.find({ _id: id });
+  //     for (const element of contestsP) {
+  //       let userId = element.userId;
+  //       await contestParticipent.deleteOne({ userId: userId });
+  //     }
+  //  }
+   return user;
   } catch (err) {
     throw err;
   }

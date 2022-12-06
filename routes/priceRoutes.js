@@ -6,5 +6,6 @@ const router = express.Router();
 
 router.post("/prices",admin,priceController.addPrice);
 router.get("/prices",priceController.getPriceList);
+router.get("/prices/:id",priceController.priceDeleteByAdmin);
 
 module.exports = router;

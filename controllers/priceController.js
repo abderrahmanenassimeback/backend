@@ -18,3 +18,13 @@ exports.getPriceList = async (req, res) => {
     res.status(422).json({ error: err.message });
   }
 };
+
+exports.priceDeleteByAdmin = async (req, res) => {
+  try {
+    const id = req.params.id;
+    userService.priceDeleteByAdmin(id);
+    res.status(204).send("success");
+  } catch (err) {
+    res.status(422).json({ error: err.message });
+  }
+};

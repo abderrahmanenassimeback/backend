@@ -215,7 +215,7 @@ const dateChecker = async (contest) => {
 
   let minutes = date.getMinutes();
 
-  let endDate = contest[0].endDate;
+  let endDate = contest[0].endDate==null ? null : contest[0].endDate;
 
   let currentDate = new Date(year, month, day, hours, minutes);
  

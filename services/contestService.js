@@ -140,11 +140,12 @@ exports.chooseMainPrize = async (id) => {
     let user=await User.findOne({_id: winner.userId});
 
     console.log(user)
+    
     const data={
       contestName: updateContest.name,
       mainPrice : updateContest.mainPrice,
       userId: winner.userId,
-      userName: user.name,
+      // userName: user.name,
       contestId: winner.contestId
     }
    console.log(data);

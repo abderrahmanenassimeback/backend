@@ -7,7 +7,7 @@ services:
       - .:/usr/app/backend
       - /usr/app/backend/node_modules
     ports:
-      - "3001:3001"
+      - "8080:8080"
    
     environment:
       DATABASE_URL: postgres://todoapp@postgres/todos

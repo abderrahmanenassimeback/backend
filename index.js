@@ -45,11 +45,11 @@ app.use(`${apiUrl}`, contest);
 
 // manage contest
 const contestParticipent = require("./routes/contestParticipentRoute");
-app.use(`${apiUrl}`,contestParticipent);
+app.use(`${apiUrl}`, contestParticipent);
 
 //manage user
 const userRoutes = require("./routes/userRoutes");
-app.use(`${apiUrl}`,userRoutes);
+app.use(`${apiUrl}`, userRoutes);
 
 //configure mongoose
 mongoose.connect(
@@ -68,6 +68,6 @@ mongoose.connect(
   }
 );
 
-app.listen(3001, () => {
+app.listen(8080, () => {
   console.log("Sever start on port 3001");
 });

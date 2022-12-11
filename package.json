@@ -4,7 +4,7 @@
   "description": "This is backend code base for the tiptop",
   "main": "index.js",
   "scripts": {
-    "start": "pm2-runtime start index.js --name backend",
+    "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "jest"
   },

@@ -6,7 +6,7 @@ passport.use(
     {
       clientID: "876382648000-39d9ftp2qg0fu79lstumd7a49h7ns2oe.apps.googleusercontent.com",
       clientSecret: "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",
-      callbackURL: "/api/v1/auth/google/callback",
+      callbackURL: "https://dsp-archiwebo21-ss-da-om-en.fr/api/v1/auth/google/callback",
       scope: ["profile", "email"],
     },
     function (accessToken, refreshToken, profile, callback) {

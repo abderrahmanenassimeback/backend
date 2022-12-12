@@ -25,7 +25,7 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    successRedirect: "http://localhost:3000/signup",
+    successRedirect: "https://dsp-archiwebo21-ss-da-om-en.fr/signup",
     failureRedirect: "/google/login/failed",
   })
 );

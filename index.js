@@ -14,7 +14,7 @@ const apiUrl = "/api/v1";
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://dsp-archiwebo21-ss-da-om-en.fr",
+    origin: "http://localhost:3001",
     methods: "GET,POST,PUT,DELETE,PATCH",
     credentials: true,
   })

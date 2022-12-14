@@ -45,15 +45,21 @@ exports.createContest = async (
         const numberOfTickets = createContest.ticketNumbers;
         const contestId = createContest._id.toString();
 
+        const allTickets = [];
         for (let i = 0; i < numberOfTickets; i++) {
           const randomString = makeid(10);
 
-          const ticketModel = new Ticket({
+          allTickets.push({
             ticketId: randomString,
             contestId: contestId,
-          });
-          await ticketModel.save();
+          })
+          // const ticketModel = new Ticket({
+          //   ticketId: randomString,
+          //   contestId: contestId,
+          // });
+          // await ticketModel.save();
         }
+        await Ticket.insertMany(allTickets);
         return createContest;
       }
     }

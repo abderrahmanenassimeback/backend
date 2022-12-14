@@ -26,7 +26,7 @@ router.get(
 
 router.get(
   "/facebook/login",
-  passport.authenticate("facebook", ["profile", "email"])
+  passport.authenticate("facebook", ["public_profile", "email"])
 );
 
 router.get(

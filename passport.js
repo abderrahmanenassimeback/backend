@@ -6,7 +6,7 @@ passport.use(new FacebookStrategy({
   clientID: "680849286860873",
   clientSecret: "b373466e7595744a64f555d4c9c29c22",
   callbackURL: 'https://dsp-archiwebo21-ss-da-om-en.fr/api/v1/auth/facebook/callback',
-  scope: ["profile", "email"],
+  scope: ["public_profile", "email"],
 },
 function (accessToken, refreshToken, profile, callback) {
   callback(null, profile);

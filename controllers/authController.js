@@ -83,7 +83,9 @@ exports.signIn = async (req, res) => {
         }
       );
       activeContest = await Contest.find({ status: "Active" });
+    if(activeContest){
       dateChecker(activeContest);
+    }
 
       // user
       res.status(200).json({ accessToken: token });

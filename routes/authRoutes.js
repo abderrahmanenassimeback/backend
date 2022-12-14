@@ -15,6 +15,8 @@ router.post("/add-employee",admin, authController.addEmplyoee);
 
 router.get("/google/login/success", authController.sucessGoogleLogin);
 
+router.get("/facebook/login/success", authController.sucessFacebookLogin);
+
 router.get("/google/login/failed", authController.failGoogleLogin);
 
 router.get(
@@ -23,8 +25,21 @@ router.get(
 );
 
 router.get(
+  "/facebook/login",
+  passport.authenticate("facebook", ["profile", "email"])
+);
+
+router.get(
   "/google/callback",
   passport.authenticate("google", {
+    successRedirect: "https://dsp-archiwebo21-ss-da-om-en.fr/signup",
+    failureRedirect: "/google/login/failed",
+  })
+);
+
+router.get(
+  "/facebook/callback",
+  passport.authenticate("facebook", {
     successRedirect: "https://dsp-archiwebo21-ss-da-om-en.fr/signup",
     failureRedirect: "/google/login/failed",
   })

@@ -16,5 +16,6 @@ router.post(
   "/contest-participents",
   contestParticipentController.updateTicketPrice
 );
+router.put("/update-participents",contestParticipentController.updateParticipentStatus)
 
 module.exports = router;

@@ -110,6 +110,26 @@ exports.getContestParticipentsList = async (req, res) => {
   }
 };
 
+exports.updateParticipentStatus = async (req, res) => {
+  try {
+    const { userId, ticketId } = req.body;
+    const filterContest = { ticketId: ticketId, userId: userId };
+    const updateContest = {  prizeStatus: "Delivered" };
+
+    let updateContestParticipent = await ContestParticipent.findOneAndUpdate(
+      filterContest,
+      updateContest,
+      {
+        new: true,
+      }
+    );
+
+    res.status(204).send("success");
+  } catch (error) {
+    res.status(422).json({ error: err.message });
+  }
+}
+
 exports.updateTicketPrice = async (req, res) => {
   try {
     const { userId, ticketId, contestId, price } = req.body;
